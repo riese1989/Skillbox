@@ -1,20 +1,22 @@
+package Objects;
+
 import java.util.ArrayList;
 
 public class Station {
     public static ArrayList <Station> stChanges = new ArrayList<>();
     private String name;
-    private String line;
+    private Line line;
 
     public String getName() {
         return name;
     }
 
-    public Station(String name,String line) {
+    public Station(String name,Line line) {
         this.line = line;
         this.name = name;
     }
 
-    public String getLine() {
+    public Line getLine() {
         return line;
     }
 
