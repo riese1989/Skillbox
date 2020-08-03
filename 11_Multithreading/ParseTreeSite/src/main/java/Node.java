@@ -99,7 +99,9 @@ public class Node {
 
             }
         } catch (HttpStatusException ex) {
+            ex.printStackTrace();
         } catch (SocketTimeoutException ex) {
+            ex.printStackTrace();
         }
     }
 

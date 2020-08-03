@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         bank.setAccounts(generationAccounts(200));
-        generateTransactions(800000);
+        generateTransactions(200000);
     }
 
     private static HashMap<String, Account> generationAccounts(int count) {

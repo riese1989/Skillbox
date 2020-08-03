@@ -38,25 +38,34 @@ public class Bank {
         System.out.println(i);
         Account accFrom = accounts.get(fromAccountNum);
         Account accTo = accounts.get(toAccountNum);
+        accFrom.setBeforeTransactionMoney();
+        accTo.setBeforeTransactionMoney();
         if (accFrom == accTo)   {
-            //System.out.println("Нельза переводить деньги между одним счётом");
+            System.out.println("Нельзя переводить деньги между одним счётом");
             return false;
         }
         if (accFrom.getMoney() < amount)    {
-            //System.out.println("На счете недостаточно средств");
+            System.out.println("На счете недостаточно средств");
             return false;
         }
         if (accFrom.getBlock() || accTo.getBlock()) {
-            //System.out.println("Нельзя проводить операции с заблокированными счетами");
+            System.out.println("Нельзя проводить операции с заблокированными счетами");
             return false;
         }
-        if (amount > 500 && isFraud(accFrom, accTo, amount)) {
+        if (amount > 50000 && isFraud(accFrom, accTo, amount)) {
             System.out.println("Счета " + accFrom.getAccNumber() + " и " + accTo.getAccNumber() + " заблокированы");
             return false;
         }
         accFrom.setMoney(accFrom.getMoney() - amount);
         accTo.setMoney(accTo.getMoney() + amount);
-        //System.out.println("Операция проведена");
+        if (!accFrom.compareMoney(amount) && !accTo.compareMoney(amount))   {
+            System.out.println("Операция завершилась некорректно");
+            System.out.println(accFrom);
+            System.out.println(accTo);
+            System.out.println(amount);
+            return false;
+        }
+        System.out.println("Операция проведена");
         return true;
     }
 
