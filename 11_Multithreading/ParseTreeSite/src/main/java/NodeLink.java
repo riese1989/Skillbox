@@ -15,27 +15,17 @@ public class NodeLink extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         ArrayList<RecursiveTask> pageList = new ArrayList<>();
-//        if (!Node.listNodes.contains(node))  {
-//            Node.listNodes.add(node);
-//        }
         try {
-            if (node.getLink().equals("https://lenta.ru/rubrics/russia/"))  {
-                System.out.println();
+            WriteFile wf = new WriteFile(node.getLink(), node.getLevel());
+            synchronized (wf) {
+                wf.export();
             }
-            for (Node child : node.getChildrens())   {
+            node.parseChildrens();
+            for (Node child : node.getChildrens()) {
                 i++;
-                    //if (child.getChildrens().size()!=0 && !Node.listNodes.contains(child) && child.getLevel() < 3)
-//                if (child.getChildrens().size()!=0 && child.getLevel() < 3){
-//                        new ForkJoinPool().invoke(new NodeLink(child));
-//                    }
-//                    else {
-                        NodeLink link = new NodeLink(child);
-                        link.fork();
-                        //pageList.add(link);
-//                        synchronized (Node.listNodes) {
-//                            Node.listNodes.add(child);
-//                       // }
-                    }
+                NodeLink link = new NodeLink(child);
+                link.fork();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

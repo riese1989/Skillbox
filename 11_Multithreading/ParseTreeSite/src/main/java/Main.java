@@ -13,6 +13,5 @@ public class Main {
         Integer result = new ForkJoinPool().invoke(new NodeLink(node));
         Date finish = new Date();
         System.out.println("Парсили " + (finish.getTime() - start.getTime()));
-        System.out.println(result);
     }
 }

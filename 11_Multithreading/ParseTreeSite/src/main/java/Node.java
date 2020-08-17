@@ -23,7 +23,6 @@ public class Node {
     }
 
     public ArrayList<Node> getChildrens() throws IOException, InterruptedException {
-        parseChildrens();
         return childrens;
     }
 
@@ -50,7 +49,7 @@ public class Node {
     public Node() {
     }
 
-    private void parseChildrens() throws InterruptedException, IOException {
+    public void parseChildrens() throws InterruptedException, IOException {
         Thread.sleep(150);
         Document doc;
         try {
@@ -60,6 +59,9 @@ public class Node {
             }
             Elements links = doc.select("a");
             for (Element linkEl : links) {
+                if (!link.equals("news") && linkEl.equals("news"))  {
+                    continue;
+                }
                 Node subSite;
                 if (linkEl.attr("href").equals("")) {
                     continue;
@@ -78,17 +80,16 @@ public class Node {
                 if(!linkSub.contains(link) &&  links.equals(link))   {
                     continue;
                 }
-                Node returnNode = null;
                 synchronized (reestrNodes) {
-                    returnNode = ReturnNode(linkSub);
+                    Node returnNode = ReturnNode(linkSub);
+                    if(returnNode != null) {
+                        subSite = returnNode;
+                    }
+                    else    {
+                        subSite = new Node(linkSub, level + 1);
+                        childrens.add(subSite);
+                    }
                 }
-                if(returnNode != null) {
-                    subSite = returnNode;
-                }
-                else    {
-                    subSite = new Node(linkSub, level + 1);
-                }
-                childrens.add(subSite);
                 synchronized (reestrNodes) {
                     ListIterator<Node> iterator = reestrNodes.listIterator();
                     while(iterator.hasNext())   {
@@ -105,12 +106,7 @@ public class Node {
         }
     }
 
-    private Node ReturnNode(String link) {
-//        for (Node node : reestrNodes) {
-//            if (node.getLink().equals(link)) {
-//                return node;
-//            }
-//        }
+    public static Node ReturnNode(String link) {
         for (Iterator<Node> it = reestrNodes.iterator(); it.hasNext(); )    {
             Node linkNode = it.next();
 
