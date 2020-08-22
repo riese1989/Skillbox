@@ -1,6 +1,4 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
 public class NodeLink extends RecursiveTask<Integer> {
@@ -13,29 +11,19 @@ public class NodeLink extends RecursiveTask<Integer> {
     }
 
     @Override
-    protected Integer compute() {
+    protected synchronized Integer compute() {
         ArrayList<RecursiveTask> pageList = new ArrayList<>();
-//        if (!Node.listNodes.contains(node))  {
-//            Node.listNodes.add(node);
-//        }
         try {
-            if (node.getLink().equals("https://lenta.ru/rubrics/russia/"))  {
-                System.out.println();
-            }
-            for (Node child : node.getChildrens())   {
+            WriteFile fw = new WriteFile(node.getLink(), node.getLevel());
+            fw.export();
+            for (Node child : node.getChildrens()) {
                 i++;
-                    //if (child.getChildrens().size()!=0 && !Node.listNodes.contains(child) && child.getLevel() < 3)
-//                if (child.getChildrens().size()!=0 && child.getLevel() < 3){
-//                        new ForkJoinPool().invoke(new NodeLink(child));
-//                    }
-//                    else {
-                        NodeLink link = new NodeLink(child);
-                        link.fork();
-                        //pageList.add(link);
-//                        synchronized (Node.listNodes) {
-//                            Node.listNodes.add(child);
-//                       // }
-                    }
+                if (node.getLevel() < 3) {
+                    NodeLink link = new NodeLink(child);
+                    link.fork();
+                    pageList.add(link);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -55,9 +56,6 @@ public class Node {
         Document doc;
         try {
             doc = Jsoup.connect(link).ignoreContentType(true).get();
-            if (link.equals("https://lenta.ru/rubrics/russia/"))  {
-                System.out.println();
-            }
             Elements links = doc.select("a");
             for (Element linkEl : links) {
                 Node subSite;
@@ -106,11 +104,6 @@ public class Node {
     }
 
     private Node ReturnNode(String link) {
-//        for (Node node : reestrNodes) {
-//            if (node.getLink().equals(link)) {
-//                return node;
-//            }
-//        }
         for (Iterator<Node> it = reestrNodes.iterator(); it.hasNext(); )    {
             Node linkNode = it.next();
 

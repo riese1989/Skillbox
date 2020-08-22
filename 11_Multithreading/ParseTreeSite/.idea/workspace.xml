@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6455da7c-2883-4182-9816-378b25e49e24" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/result.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/NodeLink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/NodeLink.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Transactions/src/main/java/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/src/main/java/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Transactions/target/classes/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/target/classes/Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/NodeLink.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/NodeLink.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,34 +97,34 @@
       <screen x="0" y="23" width="1440" height="807" />
     </state>
     <state x="482" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.1440.807@0.23.1440.807" timestamp="1596222359026" />
-    <state width="1398" height="288" key="GridCell.Tab.0.bottom" timestamp="1596366951144">
+    <state width="1398" height="288" key="GridCell.Tab.0.bottom" timestamp="1597494759182">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="288" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1596366951144" />
+    <state width="1398" height="288" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1597494759182" />
     <state width="1398" height="303" key="GridCell.Tab.0.bottom/0.23.1440.805@0.23.1440.805" timestamp="1596114402673" />
     <state width="1398" height="257" key="GridCell.Tab.0.bottom/0.23.1440.807@0.23.1440.807" timestamp="1596282637758" />
     <state width="1398" height="257" key="GridCell.Tab.0.bottom/0.23.1440.810@0.23.1440.810" timestamp="1596228853677" />
     <state width="1398" height="257" key="GridCell.Tab.0.bottom/0.23.1440.812@0.23.1440.812" timestamp="1596207240801" />
-    <state width="1398" height="288" key="GridCell.Tab.0.center" timestamp="1596366951143">
+    <state width="1398" height="288" key="GridCell.Tab.0.center" timestamp="1597494759179">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="288" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1596366951143" />
+    <state width="1398" height="288" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1597494759179" />
     <state width="1398" height="303" key="GridCell.Tab.0.center/0.23.1440.805@0.23.1440.805" timestamp="1596114402666" />
     <state width="1398" height="257" key="GridCell.Tab.0.center/0.23.1440.807@0.23.1440.807" timestamp="1596282637757" />
     <state width="1398" height="257" key="GridCell.Tab.0.center/0.23.1440.810@0.23.1440.810" timestamp="1596228853676" />
     <state width="1398" height="257" key="GridCell.Tab.0.center/0.23.1440.812@0.23.1440.812" timestamp="1596207240799" />
-    <state width="1398" height="288" key="GridCell.Tab.0.left" timestamp="1596366951143">
+    <state width="1398" height="288" key="GridCell.Tab.0.left" timestamp="1597494759178">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="288" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1596366951143" />
+    <state width="1398" height="288" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1597494759178" />
     <state width="1398" height="303" key="GridCell.Tab.0.left/0.23.1440.805@0.23.1440.805" timestamp="1596114402665" />
     <state width="1398" height="257" key="GridCell.Tab.0.left/0.23.1440.807@0.23.1440.807" timestamp="1596282637756" />
     <state width="1398" height="257" key="GridCell.Tab.0.left/0.23.1440.810@0.23.1440.810" timestamp="1596228853675" />
     <state width="1398" height="257" key="GridCell.Tab.0.left/0.23.1440.812@0.23.1440.812" timestamp="1596207240798" />
-    <state width="1398" height="288" key="GridCell.Tab.0.right" timestamp="1596366951144">
+    <state width="1398" height="288" key="GridCell.Tab.0.right" timestamp="1597494759181">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="288" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1596366951144" />
+    <state width="1398" height="288" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1597494759181" />
     <state width="1398" height="303" key="GridCell.Tab.0.right/0.23.1440.805@0.23.1440.805" timestamp="1596114402672" />
     <state width="1398" height="257" key="GridCell.Tab.0.right/0.23.1440.807@0.23.1440.807" timestamp="1596282637757" />
     <state width="1398" height="257" key="GridCell.Tab.0.right/0.23.1440.810@0.23.1440.810" timestamp="1596228853677" />
@@ -173,13 +175,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Node.java</url>
-          <line>58</line>
+          <line>59</line>
           <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/NodeLink.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
