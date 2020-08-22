@@ -4,7 +4,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -14,17 +13,16 @@ import java.util.ListIterator;
 public class Node {
     private String link;
     private Integer level;
-    private ArrayList<Node> childrens = new ArrayList<>();
+    private volatile ArrayList<Node> childrens = new ArrayList<>();
     public static volatile ArrayList<Node> listNodes = new ArrayList<>();
     public static final ArrayList<Node> reestrNodes = new ArrayList<>();
 
-    public Node(String link, Integer level) throws IOException, InterruptedException {
+    public Node(String link, Integer level) {
         this.link = link;
         this.level = level;
     }
 
-    public ArrayList<Node> getChildrens() throws IOException, InterruptedException {
-        parseChildrens();
+    public synchronized ArrayList<Node> getChildrens() throws IOException, InterruptedException {
         return childrens;
     }
 
@@ -32,7 +30,7 @@ public class Node {
         this.childrens = childrens;
     }
 
-    public Integer getLevel() {
+    public synchronized Integer getLevel() {
         return level;
     }
 
@@ -40,7 +38,7 @@ public class Node {
         this.level = level;
     }
 
-    public String getLink() {
+    public synchronized String getLink() {
         return link;
     }
 
@@ -51,7 +49,7 @@ public class Node {
     public Node() {
     }
 
-    private void parseChildrens() throws InterruptedException, IOException {
+    public void parseChildrens() throws InterruptedException, IOException {
         Thread.sleep(150);
         Document doc;
         try {
@@ -72,21 +70,20 @@ public class Node {
                 if (cutSymb.equals("") || !href.startsWith("/")) {
                     continue;
                 }
-                String linkSub = Main.siteOriginal + cutSymb;
-                if(!linkSub.contains(link) &&  links.equals(link))   {
-                    continue;
-                }
-                Node returnNode = null;
                 synchronized (reestrNodes) {
-                    returnNode = ReturnNode(linkSub);
+                    String linkSub = Main.siteOriginal + cutSymb;
+                    if(!linkSub.contains(link) &&  linkSub.equals(link))   {
+                        continue;
+                    }
+                    Node returnNode = ReturnNode(linkSub);
+                    if(returnNode != null) {
+                        continue;
+                    }
+                    else    {
+                        subSite = new Node(linkSub, level + 1);
+                        childrens.add(subSite);
+                    }
                 }
-                if(returnNode != null) {
-                    subSite = returnNode;
-                }
-                else    {
-                    subSite = new Node(linkSub, level + 1);
-                }
-                childrens.add(subSite);
                 synchronized (reestrNodes) {
                     ListIterator<Node> iterator = reestrNodes.listIterator();
                     while(iterator.hasNext())   {
@@ -96,14 +93,11 @@ public class Node {
                 }
 
             }
-        } catch (HttpStatusException ex) {
-            ex.printStackTrace();
-        } catch (SocketTimeoutException ex) {
-            ex.printStackTrace();
+        } catch (HttpStatusException | SocketTimeoutException ignored) {
         }
     }
 
-    private Node ReturnNode(String link) {
+    public synchronized static Node ReturnNode(String link) {
         for (Iterator<Node> it = reestrNodes.iterator(); it.hasNext(); )    {
             Node linkNode = it.next();
 
@@ -112,21 +106,5 @@ public class Node {
             }
         }
         return null;
-    }
-
-    private Node ReturnNode2 (String link, ArrayList<Node> arrayNodes) throws IOException, InterruptedException {
-        for (Node node : arrayNodes)    {
-            if (node.getLink().equals(link)) {
-                return node;
-            }
-            ArrayList <Node> childrens = node.getChildrens();
-            if (childrens.size() != 0)   {
-                Node returnNode = ReturnNode2(link, childrens);
-                if (returnNode != null) {
-                    return returnNode;
-                }
-            }
-        }
-            return null;
     }
 }

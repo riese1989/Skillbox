@@ -10,9 +10,13 @@ public class Main {
         Node node = new Node(siteOriginal,0);
         Node.listNodes.add(node);
         Node.reestrNodes.add(node);
-        Integer result = new ForkJoinPool().invoke(new NodeLink(node));
+        NodeLink.links.add(node);
+        Node result = new ForkJoinPool().invoke(new NodeLink(node));
+        for(Node node2 : NodeLink.links) {
+            WriteFile wf = new WriteFile(node2.getLink(), node2.getLevel());
+            wf.export();
+        }
         Date finish = new Date();
         System.out.println("Парсили " + (finish.getTime() - start.getTime()));
-        System.out.println(result);
     }
 }

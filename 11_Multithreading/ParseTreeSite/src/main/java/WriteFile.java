@@ -11,22 +11,6 @@ public class WriteFile {
         this.countTabs = tabs;
     }
 
-    public String getLine() {
-        return line;
-    }
-
-    public void setLine(String line) {
-        this.line = line;
-    }
-
-    public Integer getCountTabs() {
-        return countTabs;
-    }
-
-    public void setCountTabs(Integer countTabs) {
-        this.countTabs = countTabs;
-    }
-
     public void addTabs() {
         String tabs = new String();
         for (int i = 0; i < countTabs; i++) {
