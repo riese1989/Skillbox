@@ -1,0 +1,104 @@
+* {
+    font-family: Arial;
+}
+
+#todo-form {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: #88888878;
+}
+
+#todo-form form {
+    background-color: white;
+    border: 1px solid #333;
+    width: 300px;
+    padding: 20px;
+}
+
+#todo-form h2 {
+    margin-top: 0;
+}
+
+#todo-form label {
+    display: block;
+}
+
+#todo-form form > * {
+    margin-bottom: 5px;
+}
+
+#update-all-courses-form {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: #88888878;
+}
+
+#update-all-courses-form form {
+    background-color: white;
+    border: 1px solid #333;
+    width: 300px;
+    padding: 20px;
+}
+
+#update-all-courses-form h2 {
+    margin-top: 0;
+}
+
+#update-all-courses-form label {
+    display: block;
+}
+
+#update-all-courses-form form > * {
+    margin-bottom: 5px;
+}
+
+#update-course-form {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: #88888878;
+}
+
+#update-course-form form {
+    background-color: white;
+    border: 1px solid #333;
+    width: 300px;
+    padding: 20px;
+}
+
+#update-course-form h2 {
+    margin-top: 0;
+}
+
+#update-course-form label {
+    display: block;
+}
+
+#update-course-form form > * {
+    margin-bottom: 5px;
+}
+
+
+h4 {
+    margin-bottom: 0;
+}

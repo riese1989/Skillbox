@@ -1,19 +1,14 @@
 package main;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-
-@RestController
+@Controller
 public class DefaultController {
-    public static int i = 0;
-    @RequestMapping("/")
+    @RequestMapping("/courses")
     public String index()   {
-        if ((i++)%2 == 0)   {
-            Double number = Math.random();
-            return number.toString();
-        }
-        return (new Date()).toString();
+        return "index";
     }
 }
