@@ -1,6 +1,6 @@
-spring.datasource.url: jdbc:mysql://localhost:3306/booklib
+spring.datasource.url: jdbc:mysql://localhost:3306/booklib?useUnicode=true&serverTimezone=UTC
 spring.datasource.username: root
 spring.datasource.password: root127349
-spring.jpa.hibernate.ddl-auto: none
+spring.jpa.hibernate.ddl-auto: create
 someParameter:
   value: 5463
