@@ -7,12 +7,12 @@ $(function(){
             .append('<div id = "' + data.id + '">' + toDoCode + '</div>');
         };
     //Loading books on load page
-    $.get('/courses/', function(response)
-    {
-        for(i in response) {
-            appendToDo(response[i]);
-        }
-    });
+//    $.get('/courses/', function(response)
+//    {
+//        for(i in response) {
+//            appendToDo(response[i]);
+//        }
+//    });
 
     //Show adding todo form
     $('#show-add-todo-form').click(function(){

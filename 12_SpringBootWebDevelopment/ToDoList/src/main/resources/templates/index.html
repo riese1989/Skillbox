@@ -44,6 +44,9 @@
 <button id="show-add-todo-form">Добавить курс</button>
 <br><br>
 <div id="todo-list">
+    <div th:each = "book : books">
+        <a href="#" class="toDo-link" th.attr="data-id=${course.id}" th.text = "${course.name}"></a>
+    </div>
 </div>
 <p th:text="${someParameter}"></p>
 <button id="delete-all-courses">Удалить все курсы</button>
