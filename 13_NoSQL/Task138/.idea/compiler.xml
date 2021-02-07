@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="redis-demo" />
+        <module name="Task138" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11">
-      <module name="redis-demo" target="1.5" />
+    <bytecodeTargetLevel target="13">
+      <module name="Task138" target="13" />
     </bytecodeTargetLevel>
   </component>
 </project>
