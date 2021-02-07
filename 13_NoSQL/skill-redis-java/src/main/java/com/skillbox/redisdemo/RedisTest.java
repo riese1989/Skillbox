@@ -39,16 +39,15 @@ public class RedisTest {
         for(int seconds=0; seconds <= 10; seconds++) {
             // Выполним 500 запросов
             for(int request = 1; request <= RPS; request++) {
-                int user_id = new Random().nextInt(USERS);
-                int nextPayUser = redis.nextPayUser(user_id, request);
-                if (nextPayUser != -1)   {
-                    redis.logPageVisit(nextPayUser);
-                    out.println("> Пользователь " + nextPayUser + " оплатил платную услугу");
-                    out.println("- На главной странице показываем пользователя " + nextPayUser);
+                int userId = new Random().nextInt(USERS);
+                if (new Random().nextInt(10) == 0)   {
+                    redis.logPageVisit(userId);
+                    out.println("> Пользователь " + userId + " оплатил платную услугу");
+                    out.println("- На главной странице показываем пользователя " + userId);
                 }
                 else {
-                    redis.logPageVisit(user_id);
-                    //out.println("- На главной странице показываем пользователя " + user_id);
+                    redis.logPageVisit(userId);
+                    out.println("- На главной странице показываем пользователя " + userId);
                 }
                 Thread.sleep(SLEEP);
             }

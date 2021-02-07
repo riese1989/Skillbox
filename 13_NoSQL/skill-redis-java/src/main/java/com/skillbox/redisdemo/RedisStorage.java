@@ -80,51 +80,6 @@ public class RedisStorage {
         return onlineUsers.count(Double.NEGATIVE_INFINITY, true, Double.POSITIVE_INFINITY, true);
     }
 
-    public int nextPayUser(int userId, int request) {
-        HashMap<String, Integer> range = getRange(userId, RedisTest.getUSERS());
-        int end = range.get("end");
-        int payUserId = -1;
-        boolean payIsRange = isPayInRange(range);
-        if (!payIsRange && (randomBoolean() || request % 10 == 0)) {
-            payUserId = getNextPayUser(userId, end);
-            listPayUsers.add(payUserId);
-        }
-        return payUserId;
-    }
-
-    private HashMap<String, Integer> getRange(int userId, int fullCount) {
-        HashMap<String, Integer> range = new HashMap<>();
-        for (int i = 0; i < fullCount; i = i + 10) {
-            int end = i + 10 >= fullCount ? fullCount : i + 9;
-            if (userId >= i && userId <= end) {
-                range.put("start", i);
-                range.put("end", end);
-                return range;
-            }
-        }
-        return range;
-    }
-
-    private boolean isPayInRange(HashMap<String, Integer> range) {
-        int start = range.get("start");
-        int end = range.get("end");
-        for (int payUserId : listPayUsers) {
-            if (payUserId >= start && payUserId <= end) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private int getNextPayUser(int start, int end) {
-        Random random = new Random();
-        return random.nextInt(end - start) + start;
-    }
-
-    private boolean randomBoolean() {
-        return Math.random() < 0.5;
-    }
-
     public boolean cleanPayList()    {
         try {
             listPayUsers = new ArrayList<>();
