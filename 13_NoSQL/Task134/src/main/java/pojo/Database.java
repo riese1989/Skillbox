@@ -1,9 +1,7 @@
 package pojo;
 
-import lombok.Getter;
 import settings.DbSettings;
 
-@Getter
 public class Database {
     private String ip;
     private int port;
@@ -13,5 +11,17 @@ public class Database {
         ip = dbSettings.getIp();
         port = dbSettings.getPort();
         name = dbSettings.getNameDb();
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getName() {
+        return name;
     }
 }
