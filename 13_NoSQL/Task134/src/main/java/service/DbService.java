@@ -1,5 +1,8 @@
 package service;
 
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
@@ -8,6 +11,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.BsonField;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.BsonDocument;
 import org.bson.BsonString;
 import org.bson.Document;
@@ -15,8 +19,11 @@ import org.bson.conversions.Bson;
 import pojo.*;
 import settings.DbSettings;
 
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.and;
@@ -24,12 +31,13 @@ import static com.mongodb.client.model.Filters.and;
 public class DbService {
     private final Database database = new Database(new DbSettings());
 
-    private MongoCollection<Document> getCollection(String nameCollection)   {
+    private MongoCollection<Document> getCollection(String nameCollection) {
         MongoClient mongoClient = new MongoClient(database.getIp(), database.getPort());
         MongoDatabase mongoDatabase = mongoClient.getDatabase(database.getName());
         return mongoDatabase.getCollection(nameCollection);
     }
-    public boolean addShop(String command)    {
+
+    public boolean addShop(String command) {
         MongoCollection<Document> collection = getCollection("shop");
         String name = command.split(" ")[1];
         Document document = new Document("name", name);
@@ -37,7 +45,8 @@ public class DbService {
         System.out.println("Магазин добавлен");
         return true;
     }
-    public boolean addProduct(String command)    {
+
+    public boolean addProduct(String command) {
         MongoCollection<Document> collection = getCollection("product");
         String name = command.split(" ")[1];
         int price = Integer.parseInt(command.split(" ")[2]);
@@ -47,79 +56,60 @@ public class DbService {
         System.out.println("Продукт добавлен");
         return true;
     }
-    public boolean exposeProduct(String command)  {
+
+    public boolean exposeProduct(String command) {
         MongoCollection<Document> collectionShop = getCollection("shop");
         MongoCollection<Document> collectionProduct = getCollection("product");
-        MongoCollection<Document> collectionProductShop = getCollection("product_shop");
         String nameShop = command.split(" ")[2];
         String nameProduct = command.split(" ")[1];
         Document searchShop = collectionShop.aggregate(Collections.singletonList(match(Filters.eq("name", nameShop)))).first();
         Document searchProduct = collectionProduct.aggregate(Collections.singletonList(match(Filters.eq("name", nameProduct)))).first();
         if (searchShop != null && searchProduct != null) {
-            Document document = new Document("shop", nameShop)
-                    .append("product", nameProduct)
-                    .append("price", searchProduct.get("price"));
-            collectionProductShop.insertOne(document);
-        }
-        else    {
+            int price = Integer.parseInt(String.valueOf(searchProduct.get("price")));
+            Bson bson = BsonDocument.parse(String.format("{name: \"%s\"}", nameShop));
+            collectionShop.updateOne(bson, Updates.addToSet("products", nameProduct));
+            collectionShop.updateOne(bson, Updates.addToSet("prices", price));
+        } else {
             System.out.println("Магазин / продукт не найден");
         }
         return false;
     }
-    public boolean printStat()  {
+
+    public boolean printStat() {
         MongoCollection<Document> collectionShop = getCollection("shop");
-        MongoCollection<Document> collectionProductShop = getCollection("product_shop");
-        FindIterable<Document> shops = collectionShop.find();
-        for (Document shop : shops) {
-            String nameShop = (String) shop.get("name");
-            System.out.println("===================");
-            System.out.println("Статистика для " + nameShop + "\n");
-            Bson filterShop = Filters.eq("shop", nameShop);
-            int count = getCount(filterShop, collectionProductShop);
-            AggregateIterable<Document> aggregate = collectionProductShop
-                    .aggregate(Arrays.asList(match(filterShop), Aggregates.group("_id" ,new BsonField("averagePrice", new BsonDocument("$avg", new BsonString("$price"))))));
-            Document result = aggregate.first();
-            double avePrice = (double) result.get("averagePrice");
-            System.out.println("Общее количество товаров " + count);
-            System.out.println("Средняя цена товара " + avePrice);
-            System.out.println("Самый дорогой и самый дешевый товар");
-            Document res = getMaxMinProduct("max", filterShop, collectionProductShop);
-            System.out.println(printDocumentMaxMin("Дорогой", res));
-            res = getMaxMinProduct("min", filterShop, collectionProductShop);
-            System.out.println(printDocumentMaxMin("Дешевый", res));
-            Bson filter = Filters.and(filterShop, Filters.lt("price", 100));
-            count = getCount(filter, collectionProductShop);
-            System.out.println("Количество товаров дешевле 100 рублей " + count);
+        MongoCollection<Document> collectionProduct = getCollection("product");
+        DBObject groupFields = new BasicDBObject("_id", "$shop");
+        groupFields.put("averagePrice", new BasicDBObject("$avg", "$prices"));
+        BasicDBObject avgPrices = new BasicDBObject("$avg", "$prices");
+        BasicDBObject fieldAvg = new BasicDBObject("avgPrices", avgPrices);
+        BasicDBObject maxPrices = new BasicDBObject("$max", "$prices");
+        BasicDBObject minPrices = new BasicDBObject("$min", "$prices");
+        BasicDBObject countPrices = new BasicDBObject("$count", "$prices");
+        BasicDBObject fields = fieldAvg.append("maxPrices", maxPrices).append("minPrices", minPrices)
+                .append("name", "$name")
+                .append("prices", "$prices");
+        BasicDBObject projectAvg = new BasicDBObject("$project", fields);
+        List pipeline = Arrays.asList(projectAvg);
+        AggregateIterable<Document> output = collectionShop.aggregate(pipeline);
+        for (Document result : output) {
+            String nameShop = String.valueOf(result.get("name"));
+            System.out.println("\n Статистика для " + nameShop + "\n");
+            String avePrice = String.valueOf(result.get("avgPrices"));
+            System.out.println("Средняя цена " + avePrice);
+            String minPrice = String.valueOf(result.get("minPrices"));
+            System.out.println("Самый дешёвый товар " + nameProduct(collectionProduct, minPrice) + " " + minPrice);
+            String maxPrice = String.valueOf(result.get("maxPrices"));
+            System.out.println("Самый дорогой товар " + nameProduct(collectionProduct, maxPrice) + " " + maxPrice);
+            ArrayList<Integer> prices = (ArrayList<Integer>) result.get("prices");
+            System.out.println("Число товаров " + prices.size());
+            long countLowProducts = prices.stream().filter(p -> p < 100).count();
+            System.out.println("Число товаров дешевле 100 " + countLowProducts);
         }
         return true;
     }
 
-    private Document getMaxMinProduct (String m, Bson filterShop, MongoCollection<Document> collection) {
-        String field = m + "Price";
-        AggregateIterable<Document>aggregate = collection
-                .aggregate(Arrays.asList(match(filterShop), Aggregates.group("_id", new BsonField(field, new BsonDocument("$max", new BsonString("$price"))))));
-        Document result = aggregate.first();
-        Integer maxValue = (Integer) result.get(field);
-        Bson filter = Filters.and(filterShop, Filters.eq("price", maxValue));
-        Document document = collection.aggregate(Arrays.asList(match(filter))).first();
-        return document;
-    }
-
-    private String printDocumentMaxMin(String type, Document document) {
-        String name = (String) document.get("product");
-        Integer value = (Integer) document.get("price");
-        return type + " " + name + " " + value;
-    }
-
-    private int getCount(Bson filter, MongoCollection<Document> collection)   {
-        Document doc = collection
-                .aggregate(Arrays.asList(match(filter),count()))
-                .first();
-        try {
-            return  (int) doc.get("count");
-        }
-        catch (Exception ex)    {
-            return  0;
-        }
+    private String nameProduct(MongoCollection<Document> collection, String price) {
+        Bson filter = Filters.eq("price", Integer.parseInt(price));
+        return (String) collection.find(filter).first().get("name");
     }
 }

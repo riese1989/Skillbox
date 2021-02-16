@@ -6,7 +6,8 @@ public class Menu {
     public static void main(String[] args) {
         menu();
     }
-    private static void menu()  {
+
+    private static void menu() {
         DbService dbService = new DbService();
         System.out.println("Введите команду\n" +
                 "Пример:\n" +
