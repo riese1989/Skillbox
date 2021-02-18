@@ -1,47 +1,28 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class Writer implements Runnable {
+public class Writer {
 
-    private static PrintWriter writer, writer2, writer3;
+    private PrintWriter printWriter;
 
-    static {
+    public Writer(int startLoop) {
+        int endLoop = startLoop + 9;
+        String path = "res/numbers" + startLoop + "-" + endLoop + ".txt";
         try {
-            writer = new PrintWriter("res/numbers.txt");
-            writer2 = new PrintWriter("res/numbers2.txt");
-            writer3 = new PrintWriter("res/numbers3.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            printWriter = new PrintWriter(path);
         }
-    }
-
-    private String data;
-
-    public Writer(String data) {
-        this.data = data;
-    }
-
-    @Override
-    public void run() {
-        try {
-            write(data);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        catch (FileNotFoundException ex)    {
+            ex.printStackTrace();
         }
+
     }
 
-    private static synchronized void write(String data) throws FileNotFoundException {
-        writer.write(data);
-        writer2.write(data);
-        writer3.write(data);
+    public void write(String data) {
+        printWriter.write(data);
     }
 
-    public static void close() {
-        writer.flush();
-        writer.close();
-        writer2.flush();
-        writer2.close();
-        writer3.flush();
-        writer3.close();
+    public void stopWrite() {
+        printWriter.flush();
+        printWriter.close();
     }
 }
