@@ -5,7 +5,7 @@ public class Voter {
 
   private String name;
   private Date birthDay;
-  private int countVot = 0;
+  private int countVot = 1;
 
   public Voter(String name, Date birthDay) {
     this.name = name;
@@ -14,10 +14,6 @@ public class Voter {
 
   public void incVot()  {
       countVot++;
-  }
-
-  public int getCountVot()  {
-      return countVot;
   }
 
   @Override
@@ -46,5 +42,9 @@ public class Voter {
 
   public Date getBirthDay() {
     return birthDay;
+  }
+
+  public int getCountVot()  {
+    return countVot;
   }
 }

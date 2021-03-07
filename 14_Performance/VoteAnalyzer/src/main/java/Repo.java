@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Repo {
 
   private List<Station> stations = new ArrayList<>();
-  private ArrayList<Voter> voters = new ArrayList<>();
+  private Set<Voter> voters = new LinkedHashSet<>();
 
   public void addStation(int id, Date dateVisit) {
     Station station = getStation(id);
@@ -16,7 +19,7 @@ public class Repo {
     return stations;
   }
 
-  public ArrayList<Voter> getVoters() {
+  public Set<Voter> getVoters() {
     return voters;
   }
 
@@ -33,5 +36,14 @@ public class Repo {
     Station station = new Station(id);
     stations.add(station);
     return station;
+  }
+
+  public Voter getVoter(Voter voter)  {
+    for (Voter voter1 : voters) {
+      if (voter1.equals(voter))  {
+        return voter1;
+      }
+    }
+    return null;
   }
 }

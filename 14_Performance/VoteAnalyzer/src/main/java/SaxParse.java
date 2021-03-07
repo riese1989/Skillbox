@@ -3,11 +3,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Set;
 
 public class SaxParse extends DefaultHandler {
 
@@ -26,7 +22,7 @@ public class SaxParse extends DefaultHandler {
     String name;
     int stationId = -1;
     Date birthday = null, visit = null;
-    Voter voter;
+    Voter voter, voterRepo;
     if (qName.equals(element)) {
       isEntered = true;
       name = attributes.getValue(0);
@@ -36,7 +32,12 @@ public class SaxParse extends DefaultHandler {
         e.printStackTrace();
       }
       voter = new Voter(name, birthday);
+      long sizeBeforeAdd = repo.getVoters().size();
       repo.addVoter(voter);
+      long sizeAfterAdd = repo.getVoters().size();
+      if (sizeAfterAdd == sizeBeforeAdd)  {
+        repo.getVoters().stream().filter(v -> v.equals(voter)).findFirst().get().incVot();
+      }
     }
     if (isEntered) {
       int length = attributes.getLength();
