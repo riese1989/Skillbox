@@ -28,10 +28,6 @@ public class DBConnection {
     return connection;
   }
 
-  public static void addToDB(String sql) throws SQLException {
-    DBConnection.getConnection().createStatement().execute(sql);
-  }
-
   public static long countDuplicatedVoters() throws SQLException {
     String sql = "SELECT name, birthDate, `count` FROM voter_count WHERE `count` > 1";
     ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(sql);

@@ -2,7 +2,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Loader {
 
@@ -11,7 +10,7 @@ public class Loader {
 
   public static void main(String[] args) throws Exception {
     long start = System.currentTimeMillis();
-    String fileName = "res/data-1572M.xml";
+    String fileName = "res/data-18M.xml";
     parseFile(fileName);
     System.out.println("Voting station work times: ");
     for (Station station : repo.getStations()) {
@@ -25,9 +24,7 @@ public class Loader {
       stringWorkTimes.append("\n");
     }
     System.out.println(stringWorkTimes.toString());
-
-    String sql = getSQL();
-    DBConnection.addToDB(sql);
+    executeSQL();
     long countDoubl = DBConnection.countDuplicatedVoters();
     System.out.println("Duplicated voters: " + countDoubl);
     System.out.println(System.currentTimeMillis() - start);
@@ -40,7 +37,7 @@ public class Loader {
     parser.parse(new File(fileName), saxp);
   }
 
-  private static String getSQL()  {
+  private static void executeSQL()  {
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT INTO voter_count (name, birthDate, `count`) VALUES ");
     Iterator<Voter> iterator = repo.getVoters().iterator();
@@ -57,6 +54,14 @@ public class Loader {
       sql.append(", ");
       sql.append(voter.getCountVot());
       sql.append(")");
+      if (sql.length() > 1000)  {
+        sql.append(";");
+        WriterDB writerDB = new WriterDB(sql.toString());
+        writerDB.run();
+        sql = new StringBuilder();
+        sql.append("INSERT INTO voter_count (name, birthDate, `count`) VALUES ");
+        continue;
+      }
       if (iterator.hasNext()) {
         sql.append(", ");
       }
@@ -64,7 +69,6 @@ public class Loader {
         sql.append(";");
       }
     }
-    return sql.toString();
   }
 
 

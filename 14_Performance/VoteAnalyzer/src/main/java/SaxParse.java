@@ -1,5 +1,4 @@
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.text.ParseException;
@@ -8,7 +7,7 @@ import java.util.Date;
 public class SaxParse extends DefaultHandler {
 
   private String element;
-  private boolean isEntered;
+  private Boolean isEntered = false;
   private Repo repo;
 
   public SaxParse(String element, Repo repo) {
@@ -17,12 +16,11 @@ public class SaxParse extends DefaultHandler {
   }
 
   @Override
-  public void startElement(String uri, String localName, String qName, Attributes attributes)
-      throws SAXException {
+  public void startElement(String uri, String localName, String qName, Attributes attributes) {
     String name;
     int stationId = -1;
     Date birthday = null, visit = null;
-    Voter voter, voterRepo;
+    Voter voter;
     if (qName.equals(element)) {
       isEntered = true;
       name = attributes.getValue(0);
@@ -60,7 +58,7 @@ public class SaxParse extends DefaultHandler {
   }
 
   @Override
-  public void endElement(String uri, String localName, String qName) throws SAXException {
+  public void endElement(String uri, String localName, String qName) {
     if (qName.equals(element)) {
       isEntered = false;
     }

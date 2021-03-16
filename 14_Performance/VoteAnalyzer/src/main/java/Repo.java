@@ -10,7 +10,7 @@ public class Repo {
   private List<Station> stations = new ArrayList<>();
   private Set<Voter> voters = new LinkedHashSet<>();
 
-  public void addStation(int id, Date dateVisit) {
+  public synchronized void addStation(int id, Date dateVisit) {
     Station station = getStation(id);
     station.addVisit(dateVisit);
   }
@@ -27,7 +27,7 @@ public class Repo {
     voters.add(voter);
   }
 
-  private Station getStation(int id) {
+  private synchronized Station getStation(int id) {
     for (Station station : stations) {
       if (station.getId() == id) {
         return station;
