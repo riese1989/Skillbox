@@ -200,3 +200,5 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,jetbrains
 18_Algorithms/.idea
 **/.idea
+
+14_Performance/VoteAnalyzer/res/*
