@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>homework_21.3</artifactId>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <!-- Use last available configuration -->
+          <configLocation>checkstyle.xml</configLocation>
+          <configLocation>${checkstyle.config.remote}</configLocation>
+          <consoleOutput>true</consoleOutput>
+          <encoding>UTF-8</encoding>
+          <logViolationsToConsole>false</logViolationsToConsole>
+          <violationSeverity>warning</violationSeverity>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <id>verify-style</id>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>${checkstyle-maven-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.2</version>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <artifactId>junit-jupiter-api</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+      <version>${junit.platform.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <scope>test</scope>
+      <version>${junit.platform.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>checkstyle</artifactId>
+      <groupId>com.puppycrawl.tools</groupId>
+      <version>${puppycrawl.version}</version>
+    </dependency>
+  </dependencies>
+  <groupId>ru.skillbox.java</groupId>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <properties>
+    <checkstyle-maven-plugin.version>3.1.1</checkstyle-maven-plugin.version>
+    <checkstyle.config.remote>
+      https://raw.githubusercontent.com/skillbox-java/checkstyle/master/checkstyle_M4.xml
+    </checkstyle.config.remote>
+    <junit.platform.version>5.3.2</junit.platform.version>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <puppycrawl.version>8.34</puppycrawl.version>
+  </properties>
+
+  <version>1.0-SNAPSHOT</version>
+</project>
