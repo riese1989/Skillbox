@@ -12,6 +12,15 @@ public abstract class AbstractSortArrayClass {
     public abstract void sortArray(int[] array);
 
     @Test
+    @DisplayName("4231")
+    public void myTest(){
+        int[] expected = {1, 2, 3, 4};
+        int[] actual = {4, 2, 3, 1};
+        sortArray(actual);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
     @DisplayName("Пустой массив")
     public void emptyArrayTest(){
         int[] expected = new int[0];

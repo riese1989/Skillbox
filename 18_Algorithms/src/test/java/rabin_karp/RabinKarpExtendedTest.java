@@ -13,8 +13,10 @@ class RabinKarpExtendedTest {
     @Test
     @DisplayName("Искомая подстрока есть в тексте")
     public void foundTest(){
-        String text = "ASDFGHJKLASDDSADFAAFASFASFASSDASASDASDASFASFASFASFDASFAFGDSAGFADAFDSFA";
-        String query = "AFASFASFAS";
+//        String text = "ASDFGHJKLASDDSADFAAFASFASFASSDASASDASDASFASFASFASFDASFAFGDSAGFADAFDSFA";
+//        String query = "AFASFASFAS";
+        String text = "ADREA";
+        String query = "DR";
         RabinKarpExtended rabin = new RabinKarpExtended(text);
         List<Integer> actual = rabin.search(query);
         int index = text.indexOf(query);
@@ -45,6 +47,7 @@ class RabinKarpExtendedTest {
     @Test
     @DisplayName("В искомой подстроке есть символ не из алфавита")
     public void withAnotherCharSetTest(){
+        //String text = "asdfgadasfgsdgsadgasgsadgasdgasdgsdgasdgasdgasdfasg";
         String text = "asdfgadasfgsdgsadgasgsadgasdgasdgsdgasdgasdgasdfasg";
         String query = "asdfga7";
         RabinKarpExtended rabin = new RabinKarpExtended(text);
