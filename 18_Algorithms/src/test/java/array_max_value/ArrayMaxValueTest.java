@@ -18,7 +18,7 @@ class ArrayMaxValueTest {
 
     @Test
     @DisplayName("Массив со значениями")
-    public void arrayMaxValueTest(){
+    public void arrayMaxValueTest() throws Exception {
         Random random = new Random();
         int n = 10;
         int[] array = new int[n];
