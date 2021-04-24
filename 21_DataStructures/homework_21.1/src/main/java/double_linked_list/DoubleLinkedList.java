@@ -8,28 +8,55 @@ public class DoubleLinkedList<T> {
     private int size;
 
     public ListItem<T> popHeadElement() {
+        ListItem<T> current = head;
+        removeHeadElement();
         // TODO
-        return null;
+        return current;
     }
 
     public ListItem<T> popTailElement() {
         // TODO
-        return null;
+        ListItem<T> current = tail;
+        removeTailElement();
+        return current;
     }
 
     public void removeHeadElement() {
+        head = head.next;
+        size--;
         // TODO
     }
 
     public void removeTailElement() {
+        tail = tail.prev;
+        size--;
         // TODO
     }
 
     public void addToHead(T data) {
+        ListItem<T> current = new ListItem<>(data);
+        if (head != null) {
+            head.prev = current;
+            current.next = head;
+        }
+        if (tail == null)   {
+            tail = current;
+        }
+        head = current;
+        size++;
         // TODO
     }
 
     public void addToTail(T data) {
+        ListItem<T> current = new ListItem<>(data);
+        if (tail !=null) {
+            tail.next = current;
+            current.prev = tail;
+        }   else    {
+            head = current;
+        }
+        tail = current;
+        size++;
         // TODO
     }
 

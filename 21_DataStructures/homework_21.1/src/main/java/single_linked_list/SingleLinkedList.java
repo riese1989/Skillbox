@@ -28,6 +28,11 @@ public class SingleLinkedList {
     }
 
     public void removeLast() {
+        ListItem current = top;
+        while (current.getNext().getNext() != null)   {
+            current = current.getNext();
+        }
+        current.setNext(null);
         // TODO: remove last element
     }
 
