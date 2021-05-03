@@ -28,4 +28,14 @@ public final class Node {
     public void setRight(Node right) {
         this.right = right;
     }
+
+    public int compare(Node node)   {
+        if (data.compareTo(node.getData()) > 0) {
+            return 1;
+        }
+        if (data.compareTo(node.getData()) < 0) {
+            return -1;
+        }
+        return 0;
+    }
 }
