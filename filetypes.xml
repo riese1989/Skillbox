@@ -3,6 +3,7 @@
     <extensionMap>
       <mapping pattern="addUserToRoleProject.groovy" type="Groovy" />
       <mapping pattern="addUserToRoleProject" type="Groovy" />
+      <mapping pattern=".gitognore" type="PLAIN_TEXT" />
       <mapping pattern="kjhabfkjaef" type="SQL" />
     </extensionMap>
   </component>
